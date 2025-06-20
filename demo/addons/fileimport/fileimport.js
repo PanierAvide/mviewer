@@ -477,8 +477,8 @@ const fileimport = (function () {
         if ($("#collapseZero").hasClass("in") !== false) {
           oLayer.xfield = $("#x-select").val();
           oLayer.yfield = $("#y-select").val();
-          oLayer.layer.set(xfield, oLayer.xfield);
-          oLayer.layer.set(yfield, oLayer.yfield);
+          oLayer.layer.set("xfield", oLayer.xfield);
+          oLayer.layer.set("yfield", oLayer.yfield);
           _mapCSV(data, oLayer, oLayer.layer, $("#srs-select").val());
         } else {
           // geocode file
