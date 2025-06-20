@@ -1,4 +1,5 @@
 const fileimport = (function () {
+  const API_CSV = "https://api-adresse.data.gouv.fr/search/csv/";
   var _button;
   var _buttonActive = false;
   var _importLayer;
@@ -276,6 +277,14 @@ const fileimport = (function () {
     <input type="file" name="filebutton" onchange="fileimport.loadLocalFile('${oLayer.layerid}')" style="visibility:hidden;" id="loadcsv-${oLayer.layerid}"/>`;
   };
 
+  /**Veifiy if coordinates fields are corrects and return features */
+  const isCorrectCSVCoordFields = (data, oLayer) => {
+    // Check if the CSV has at least two fields for coordinates
+    const parsedData = Papa.parse(data, { header: true });
+    let withXY = parsedData.data.filter((f) => f[oLayer.xfield] && f[oLayer.yfield]);
+    return withXY.length > 0;
+  };
+
   /**
    * Private method _loadUrlFile
    * Reads csv from URL and calls _initCsvModal with parsed data.
@@ -284,20 +293,24 @@ const fileimport = (function () {
   const _loadUrlFile = function (idLayer, urlFromAPI) {
     const url = urlFromAPI || document.getElementById("importFileByUrl").value;
     const oLayer = mviewer.getLayers()[idLayer];
+    // clear previous data
+    oLayer.layer.getSource().clear();
     // read csv from URL
     fetch(url).then((response) => {
       if (response.ok) {
         response.text().then((data) => {
-          // parse csv to json
-          console.log(data);
-
           // call _mapCSV with parsed data
-          if (oLayer.xfield && oLayer.yfield) {
-            _mapCSV(data, oLayer, oLayer.layer);
+          if (oLayer.xfield && oLayer.yfield && isCorrectCSVCoordFields(data, oLayer)) {
+            _mapCSV(data, oLayer, oLayer.layer, "");
           } else {
             _initCsvModal(idLayer, data, oLayer, "grist.csv");
           }
-          // _mapCSV(data, mviewer.getLayers()[idLayer], mviewer.getLayers()[idLayer].layer);
+          oLayer.layer.set("url", url);
+          setPermaLink({
+            file: url,
+            xfield: oLayer.xfield,
+            yfield: oLayer.yfield,
+          });
         });
       } else {
         var alertText = _getI18NAlertMessage(
@@ -464,6 +477,8 @@ const fileimport = (function () {
         if ($("#collapseZero").hasClass("in") !== false) {
           oLayer.xfield = $("#x-select").val();
           oLayer.yfield = $("#y-select").val();
+          oLayer.layer.set(xfield, oLayer.xfield);
+          oLayer.layer.set(yfield, oLayer.yfield);
           _mapCSV(data, oLayer, oLayer.layer, $("#srs-select").val());
         } else {
           // geocode file
@@ -734,9 +749,7 @@ const fileimport = (function () {
       $.ajax({
         type: "POST",
         processData: false,
-        url: oLayer.geocoderurl
-          ? oLayer.geocoderurl
-          : "https://api-adresse.data.gouv.fr/search/csv/",
+        url: oLayer?.geocoderurl || API_CSV,
         data: formData,
         contentType: false,
         success: function (data) {
@@ -768,7 +781,7 @@ const fileimport = (function () {
    * @param {Object} l
    * @param {String} srs
    */
-  var _mapCSV = function (data, oLayer, l, srs) {
+  var _mapCSV = function (data, oLayer, l, srs, title) {
     var _epsg = srs ? srs : "EPSG:4326";
     var _source = l.getSource();
     l.setStyle(getImportStyle.bind(this));
@@ -776,6 +789,10 @@ const fileimport = (function () {
     var results = Papa.parse(data, { header: true });
 
     let withXY = results.data.filter((f) => f[oLayer.xfield] && f[oLayer.yfield]);
+    if (withXY) {
+      oLayer.layer.set("xfield", oLayer.xfield);
+      oLayer.layer.set("yfield", oLayer.yfield);
+    }
     let features = withXY.map((f) => {
       var feature = new ol.Feature({
         geometry: new ol.geom.Point(
@@ -808,7 +825,9 @@ const fileimport = (function () {
       items: [
         {
           styles: [getImportStyle(oLayer.layer.getSource().getFeatures()[0])],
-          label: "Points",
+          label:
+            document.getElementsByClassName("csv-name form-control")?.[0]?.value ||
+            "Points CSV",
           geometry: "Point",
         },
       ],
@@ -828,6 +847,10 @@ const fileimport = (function () {
       $.ajax({
         url: oLayer.url,
         success: function (data) {
+          oLayer.layer.set("url", url);
+          setPermaLink({
+            file: url,
+          });
           _geocode(data, oLayer, l);
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -901,6 +924,10 @@ const fileimport = (function () {
         url: API.file,
       });
     }
+  };
+
+  setPermaLink = (params) => {
+    API = { ...API, ...params };
   };
 
   return {
