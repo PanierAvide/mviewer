@@ -146,7 +146,7 @@ Si votre application contient des **éléments personnalisés (style CSS, page d
 - Je vérifie le bon fonctionnement de l’accueil dans la nouvelle version
 - Si nécessaire, j’adapte le code selon la documentation officielle de Bootstrap 5
 
-**Utilisez-vous un thème (hors DSFR) ?**
+**Utilisez-vous un thème ?**
 
 ❌ Non : je passe à l’étape d’après  
 
@@ -159,7 +159,7 @@ Si votre application contient des **éléments personnalisés (style CSS, page d
 
 ❌ Non : je passe à l’étape d’après  
 
-✔️ Oui : Cette version n’est pas encore compatible avec ce thème. Nous vous invitons donc à patienter ou à utiliser un thème par défaut.
+✔️ Oui : Depuis la version 4.1, il est de nouveau intégré dans mviewer.
 
 **Utilisez-vous un plugin ?**
 
