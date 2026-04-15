@@ -1,6 +1,6 @@
 {
   "name": "mviewer",
-  "version": "3.10.0-snapshot",
+  "version": "4.1.1-snapshot",
   "description": "Mviewer",
   "main": "index.html",
   "scripts": {
@@ -25,9 +25,9 @@
   },
   "homepage": ".",
   "dependencies": {
-    "vite": "^7.3.0"
+    "vite": "^8.0.8"
   },
   "devDependencies": {
-    "prettier": "^2.7.1"
+    "prettier": "^3.8.3"
   }
 }
