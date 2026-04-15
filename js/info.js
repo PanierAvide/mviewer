@@ -1344,7 +1344,7 @@ var info = (function () {
    */
 
   var queryLayer = function (x, y, proj, layer, featureid) {
-    x, y, 16;
+    (x, y, 16);
     var pt = ol.proj.transform([x, y], proj, _projection.getCode());
     var p = _map.getPixelFromCoordinate(pt);
     $("#loading-indicator").show();

@@ -4094,7 +4094,7 @@ mviewer = (function () {
     },
 
     alert: function (msg, cls, ms) {
-      _message(msg, cls), ms;
+      (_message(msg, cls), ms);
     },
 
     toast: function (title, msg) {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" dir="ltr">
   <head>
     <title>Mviewer</title>
@@ -202,7 +202,7 @@
                     <a
                       class="btn btn-primary"
                       type="button"
-                      onclick="mviewer.toggleLegend();"
+                      onclick="mviewer.toggleLegend()"
                       title="Afficher/masquer la légende"
                       i18n="legend.title"
                       href="#">
@@ -212,7 +212,7 @@
                       class="btn btn-primary"
                       type="button"
                       id="btn-remove-layers"
-                      onclick="mviewer.removeAllLayers();"
+                      onclick="mviewer.removeAllLayers()"
                       title="Supprimer toutes les couches"
                       i18n="legend.remove.all"
                       href="#">
@@ -307,7 +307,7 @@
           </div>
           <!-- BACKGROUND LAYERS  -->
           <div id="backgroundlayerstoolbar-gallery">
-            <div class="" onclick="mviewer.bgtoogle();"></div>
+            <div class="" onclick="mviewer.bgtoogle()"></div>
             <ul id="basemapslist"></ul>
           </div>
           <!-- MVIEWER INFO AND VERSION  -->
@@ -326,7 +326,7 @@
             <button
               data-bs-toggle="modal"
               data-bs-target="#sharepanel"
-              onclick="mviewer.mapShare();"
+              onclick="mviewer.mapShare()"
               id="sharebtn"
               title="Partager cette carte"
               i18n="tbar.right.share"
@@ -340,7 +340,7 @@
               id="geolocbtn"
               type="button"
               class="btn btn-light"
-              onclick="mviewer.geoloc();"
+              onclick="mviewer.geoloc()"
               title="Se localiser"
               i18n="tbar.right.location"
               tabindex="0"
@@ -351,7 +351,7 @@
               id="northbtn"
               type="button"
               class="btn btn-light"
-              onclick="mviewer.northRotate();"
+              onclick="mviewer.northRotate()"
               title="Orienté au nord"
               i18n="tbar.right.rotation"
               tabindex="0"
@@ -362,7 +362,7 @@
               id="studiolink"
               type="button"
               class="btn btn-light"
-              onclick="mviewer.openStudio();"
+              onclick="mviewer.openStudio()"
               title="Modifier la carte"
               i18n="tbar.right.studio"
               tabindex="0"
@@ -385,7 +385,7 @@
               id="mapprint"
               type="button"
               class="btn btn-light"
-              onclick="window.print();"
+              onclick="window.print()"
               title="Imprimer la vue courante"
               i18n="tbar.right.mapprint"
               tabindex="0"
@@ -400,7 +400,7 @@
             aria-label="true">
             <button
               href="#"
-              onclick="mviewer.nextBackgroundLayer();"
+              onclick="mviewer.nextBackgroundLayer()"
               id="backgroundlayersbtn"
               title="Changer de fond de carte"
               i18n="tbar.right.background"
@@ -536,7 +536,7 @@
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="nav-item">
                   <a
-                    onclick="mviewer.tools.addlayers.clearResultsList();"
+                    onclick="mviewer.tools.addlayers.clearResultsList()"
                     class="nav-link active"
                     href="#add_ogc"
                     aria-controls="profile"
@@ -548,7 +548,7 @@
                 </li>
                 <li role="presentation" class="nav-item">
                   <a
-                    onclick="mviewer.tools.addlayers.clearResultsList();"
+                    onclick="mviewer.tools.addlayers.clearResultsList()"
                     class="nav-link"
                     href="#add_csw"
                     aria-controls="messages"
@@ -560,7 +560,7 @@
                 </li>
                 <li role="presentation" class="nav-item">
                   <a
-                    onclick="apiFeatures.clearResultsList();"
+                    onclick="apiFeatures.clearResultsList()"
                     class="nav-link"
                     href="#add_api_features"
                     aria-controls="messages"
@@ -589,7 +589,7 @@
                       <button
                         class="btn btn-primary"
                         type="button"
-                        onclick="mviewer.tools.addlayers.connect();">
+                        onclick="mviewer.tools.addlayers.connect()">
                         <i class="ri-search-line"></i>
                       </button>
                     </div>
@@ -610,7 +610,7 @@
                     <button
                       class="btn btn-primary"
                       type="button"
-                      onclick="mviewer.tools.addlayers.connectCsw();">
+                      onclick="mviewer.tools.addlayers.connectCsw()">
                       <i class="ri-search-line"></i>
                     </button>
                   </div>
@@ -635,7 +635,7 @@
                     <button
                       class="btn btn-primary"
                       type="button"
-                      onclick="apiFeatures.connect();">
+                      onclick="apiFeatures.connect()">
                       <i class="ri-search-line"></i>
                     </button>
                   </div>
@@ -733,7 +733,9 @@
                     ><i class="ri-mail-line"></i><span>E-mail</span></a
                   >
                   <a
-                    onclick="document.querySelector('#blockIframe').classList.toggle('is-hidden');"
+                    onclick="
+                      document.querySelector('#blockIframe').classList.toggle('is-hidden')
+                    "
                     title="Afficher le code d'intégration"
                     ><i class="ri-code-s-slash-line"></i
                     ><span i18n="share.mode.newtab">Intégrer</span></a
@@ -748,7 +750,9 @@
                     ><i class="ri-facebook-circle-line"></i><span>Facebook</span></a
                   >
                   <a
-                    onclick="document.querySelector('#share').classList.toggle('is-hidden');"
+                    onclick="
+                      document.querySelector('#share').classList.toggle('is-hidden')
+                    "
                     title="Afficher le QR-Code"
                     ><i class="ri-qr-code-fill"></i><span>QR-code</span></a
                   >
@@ -758,7 +762,7 @@
                     <h6 i18n="share.title.iframe">Code d'intégration en iframe</h6>
                     <button
                       class="btn btn-primary btn-sm"
-                      onclick="mviewer.copyToClipboard('urlIframeShare');">
+                      onclick="mviewer.copyToClipboard('urlIframeShare')">
                       <span i18n="btn.copy">Copier</span>
                     </button>
                   </div>
@@ -780,7 +784,11 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-sm"
-                    onclick="navigator.clipboard.writeText(document.getElementById('urlShare__link').value);">
+                    onclick="
+                      navigator.clipboard.writeText(
+                        document.getElementById('urlShare__link').value
+                      )
+                    ">
                     <span i18n="btn.copy">Copier</span>
                   </button>
                 </div>
@@ -1116,11 +1124,8 @@
             const is400 = status === "parsererror" ? "400" : "";
 
             if (API.debug === "true") {
-              document.querySelector(
-                "#loader-title"
-              ).innerHTML = `<i class="fa fa-code" aria-hidden="true"></i> code ${
-                is404 || is400
-              }`;
+              document.querySelector("#loader-title").innerHTML =
+                `<i class="fa fa-code" aria-hidden="true"></i> code ${is404 || is400}`;
               return;
             }
             if (request.statusCode().status === 404) {
