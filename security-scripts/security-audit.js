@@ -50,42 +50,46 @@ function collectRows(json) {
 
   issues.forEach((item) => {
     const file = item.file || item.fileName || "unknown";
-    const pkg = item.package || item.component || item.componentName || path.basename(file);
-    const version = item.version || item.componentVersion || "inconnue";
-    const vulns = Array.isArray(item.vulnerabilities)
-      ? item.vulnerabilities
-      : Array.isArray(item.vulns)
-        ? item.vulns
-        : [];
-    const vulnKnown = vulns.length > 0 ? "Oui" : "Non";
-    const severity = vulns.map((vuln) => (vuln.severity || "").toLowerCase());
-    const risk =
-      vulnKnown === "Oui"
-        ? severity.includes("high")
-          ? "Critique"
-          : severity.includes("medium")
-            ? "Élevé"
-            : "Moyen"
-        : "Faible";
-    const action =
-      vulnKnown === "Oui"
-        ? "Mettre à jour ou remplacer la dépendance vulnérable"
-        : "Aucune action urgente";
-    const cves = Array.from(
-      new Set(
-        vulns.flatMap((vuln) => {
-          const identifiers = vuln.identifiers || {};
-          return Array.isArray(identifiers.CVE) ? identifiers.CVE : [];
-        }),
-      ),
-    );
-    const cveList = cves.length > 0 ? cves.join(", ") : "Aucune";
-    const key = `${pkg}|${file}|${version}|${risk}|${cveList}`;
+    const results = Array.isArray(item.results) && item.results.length > 0 ? item.results : [item];
 
-    if (!seen.has(key)) {
-      seen.add(key);
-      rows.push({ pkg, file, version, vulnKnown, risk, cveList, action });
-    }
+    results.forEach((result) => {
+      const pkg = result.package || result.component || result.componentName || path.basename(file);
+      const version = result.version || result.componentVersion || "inconnue";
+      const vulns = Array.isArray(result.vulnerabilities)
+        ? result.vulnerabilities
+        : Array.isArray(result.vulns)
+          ? result.vulns
+          : [];
+      const vulnKnown = vulns.length > 0 ? "Oui" : "Non";
+      const severity = vulns.map((vuln) => (vuln.severity || "").toLowerCase());
+      const risk =
+        vulnKnown === "Oui"
+          ? severity.includes("high")
+            ? "Critique"
+            : severity.includes("medium")
+              ? "Élevé"
+              : "Moyen"
+          : "Faible";
+      const action =
+        vulnKnown === "Oui"
+          ? "Mettre à jour ou remplacer la dépendance vulnérable"
+          : "Aucune action urgente";
+      const cves = Array.from(
+        new Set(
+          vulns.flatMap((vuln) => {
+            const identifiers = vuln.identifiers || {};
+            return Array.isArray(identifiers.CVE) ? identifiers.CVE : [];
+          }),
+        ),
+      );
+      const cveList = cves.length > 0 ? cves.join(", ") : "Aucune";
+      const key = `${pkg}|${file}|${version}|${risk}|${cveList}`;
+
+      if (!seen.has(key)) {
+        seen.add(key);
+        rows.push({ pkg, file, version, vulnKnown, risk, cveList, action });
+      }
+    });
   });
 
   return rows;
