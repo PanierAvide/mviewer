@@ -129,6 +129,18 @@ Cette section propose les informations nécessaires pour migrer votre installati
 
    doc_migration/v4.0.rst
 
+Sécurité et scan de vulnérabilités
+----------------------------------
+
+Cette section décrit le scan de sécurité JavaScript intégré au dépôt, qui permet de détecter les bibliothèques JavaScript vulnérables utilisées dans le projet. Le scan repose sur `Retire.js <https://retirejs.github.io/retire.js/>`_ et sur le script ``security-scripts/security-audit.js``.
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Sécurité & scan de vulnérabilités
+
+   doc_security/scan.rst
+
 Auteurs et licence
 ==================
 
